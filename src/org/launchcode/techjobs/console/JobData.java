@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -74,15 +75,53 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
 
         return jobs;
     }
+
+    /**
+     * Returns results of search the jobs data by value, using
+     * inclusion of the search term.
+     *
+     * For example, searching for "Web" but the job has "Front end web-dev and name "Front end web dev" would only
+     * show up once.".
+     *
+     * @param value Value of the field to search for
+     * @return List of all jobs that includes the search term but does not duplicate jobs if search terms are in different fields
+     *
+     */
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+
+        //loop through each job and get the value from the hashmap, compare using contains
+        //look at code from gradebook example -  getValue for grades Don't want this to be a boolean but that actual value
+            for (Map.Entry<String, String> job : row.entrySet())
+
+//                String aLowerValue = job.getValue()
+                if (job.getValue().toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+
+            }
+        }
+
+        return jobs;
+    }
+
+
+
 
     /**
      * Read in data from a CSV file and store it in a list
