@@ -121,7 +121,7 @@ public class TechJobs {
                 System.out.println("*****************************");
             }
         } else {
-            System.out.println("There are no jobs that match that criteria!");
+            System.out.println("There are no jobs that match that criteria! Try again.");
         }
     }
 }
